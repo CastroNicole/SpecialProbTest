@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/14-xYnnVH0hHFGLk5FiXtX4-B5JHRGlzf
 """
 
-pip install Augmentor
-
 from PIL import Image
 import os
 
