@@ -7,6 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/14-xYnnVH0hHFGLk5FiXtX4-B5JHRGlzf
 """
 
+pip install Augmentor
+
 from PIL import Image
 import os
 
@@ -25,15 +27,7 @@ for root, dirs, files in os.walk(input_dir):
         except Exception as e:
             print(f"Error processing {file_path}: {e}")
 
-import subprocess
-import sys
-
-try:
-    import Augmentor
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "Augmentor"])
-    import Augmentor
-
+import Augmentor
 p = Augmentor.Pipeline("/content/drive/MyDrive/Special Problem/Leaves/Datasets/Diseases", output_directory="/content/drive/MyDrive/Special Problem/Leaves/Outputs/output")
 
 p.rotate(probability=0.7, max_left_rotation=10, max_right_rotation=10)
@@ -72,7 +66,7 @@ import numpy as np
 normalized_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
 image_batch, labels_batch = next(iter(normalized_ds))
 first_image = image_batch[0]
-# Notice the pixel values are now in `[0,1]`.
+# Notice the pixel values are now in [0,1].
 print(np.min(first_image), np.max(first_image))
 
 AUTOTUNE = tf.data.AUTOTUNE
