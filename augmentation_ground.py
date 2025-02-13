@@ -281,36 +281,36 @@ plt.legend()
 plt.show()
 
 from tensorflow.keras.models import Model, load_model
-  from tensorflow.keras.layers import Average, Input, Lambda
-  import tensorflow as tf
+from tensorflow.keras.layers import Average, Input, Lambda
+import tensorflow as tf
 
-  # Load models
-  model_1 = load_model('/content/drive/MyDrive/Special Problem/Leaves/Models/model-05-0.9010.keras')
-  model_2 = load_model('/content/drive/MyDrive/Special Problem/Leaves/Models/model-05-0.9040.keras')
-  model_3 = load_model('/content/drive/MyDrive/Special Problem/Leaves/Models/model-10-0.9750.keras')
+# Load models
+model_1 = load_model('/content/drive/MyDrive/Special Problem/Leaves/Models/model-05-0.9010.keras')
+model_2 = load_model('/content/drive/MyDrive/Special Problem/Leaves/Models/model-05-0.9040.keras')
+model_3 = load_model('/content/drive/MyDrive/Special Problem/Leaves/Models/model-10-0.9750.keras')
 
-  # Input layer
-  model_input = Input(shape=(224, 224, 3))
+# Input layer
+model_input = Input(shape=(224, 224, 3))
 
-  # Wrap each model in Lambda layers to isolate their computational graphs
-  output_1 = Lambda(lambda x: model_1(x), name="model_1_output")(model_input)
-  output_2 = Lambda(lambda x: model_2(x), name="model_2_output")(model_input)
-  output_3 = Lambda(lambda x: model_3(x), name="model_3_output")(model_input)
+# Wrap each model in Lambda layers to isolate their computational graphs
+output_1 = Lambda(lambda x: model_1(x), name="model_1_output")(model_input)
+output_2 = Lambda(lambda x: model_2(x), name="model_2_output")(model_input)
+output_3 = Lambda(lambda x: model_3(x), name="model_3_output")(model_input)
 
-  # Merge outputs using Average
-  ensemble_output = Average(name="ensemble_average")([output_1, output_2, output_3])
+# Merge outputs using Average
+ensemble_output = Average(name="ensemble_average")([output_1, output_2, output_3])
 
-  # Create ensemble model
-  ensemble_model = Model(inputs=model_input, outputs=ensemble_output, name='ensemble')
+# Create ensemble model
+ensemble_model = Model(inputs=model_input, outputs=ensemble_output, name='ensemble')
 
-  # Compile ensemble model
-  ensemble_model.compile(
-      optimizer='adam',
-      loss='sparse_categorical_crossentropy',
-      metrics=['accuracy']
-  )
+# Compile ensemble model
+ensemble_model.compile(
+    optimizer='adam',
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
 
-  print("Ensemble model created successfully.")
+print("Ensemble model created successfully.")
 
 ensemble_model.compile(
     optimizer='adam',
